@@ -84,7 +84,7 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
-        - ContainerName: "simple-app"
+        - ContainerName: !Ref TaskName
           ContainerPort: 80
           TargetGroupArn: !Ref TargetGroup
     DependsOn:
@@ -127,9 +127,9 @@ Resources:
   TaskDefinition:
     Type: "AWS::ECS::TaskDefinition"
     Properties:
-      Family: !Sub "${AWS::StackName}-simple-app"
+      Family: !Sub "${AWS::StackName}-${TaskName}"
       ContainerDefinitions:
-        - Name: simple-app
+        - Name: !Ref TaskName
           Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${CiRepositoryName}:${Tag}"
           EntryPoint:
             - /usr/sbin/apache2
@@ -153,7 +153,7 @@ Resources:
           Essential: false
           Memory: 128
           VolumesFrom:
-            - SourceContainer: simple-app
+            - SourceContainer: !Ref TaskName
           Command:
             - /bin/sh -c "while true; do /bin/date > /var/www/my-vol/date; sleep 1; done"
       Volumes:
@@ -164,21 +164,21 @@ Outputs:
   ServiceArn:
     Value: !Ref Service
     Export:
-      Name: !Sub "${AWS::StackName}-simple-app-service-arn"
+      Name: !Sub "${AWS::StackName}-${TaskName}-service-arn"
 
   LoadBalancerDnsName:
     Value: !GetAtt Service.Name
     Export:
-      Name: !Sub "${AWS::StackName}-simple-app-service-name"
+      Name: !Sub "${AWS::StackName}-${TaskName}-service-name"
 
   TargetGroupArn:
     Value: !Ref TargetGroup
     Export:
-      Name: !Sub "${AWS::StackName}-sample-app-target-group-arn"
+      Name: !Sub "${AWS::StackName}-${TaskName}-target-group-arn"
 
   TargetGroupFullName:
     Value: !GetAtt TargetGroup.TargetGroupFullName
     Export:
-      Name: !Sub "${AWS::StackName}-sample-app-target-group-full-name"
+      Name: !Sub "${AWS::StackName}-${TaskName}-target-group-full-name"
 
 
