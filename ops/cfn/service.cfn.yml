@@ -18,6 +18,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 # limitations under the License.
 
 Parameters:
+
   Tag:
     Type: String
 
@@ -158,6 +159,7 @@ Resources:
             Options:
               awslogs-region: !Sub "${AWS::Region}"
               awslogs-group: !Ref LogGroup
+              awslogs-stream-prefix: !Ref Tag
         - Name: busybox
           Image: busybox
           EntryPoint:
