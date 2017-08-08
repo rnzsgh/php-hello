@@ -199,10 +199,15 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-${TaskName}-service-arn"
 
-  LoadBalancerDnsName:
+  ServiceName:
     Value: !GetAtt Service.Name
     Export:
       Name: !Sub "${AWS::StackName}-${TaskName}-service-name"
+
+  TaskDefinitionArn:
+    Value: !Ref TaskDefinition
+    Export:
+      Name: !Sub "${AWS::StackName}-${TaskName}-task-definition-arn"
 
   TargetGroupArn:
     Value: !Ref TargetGroup
