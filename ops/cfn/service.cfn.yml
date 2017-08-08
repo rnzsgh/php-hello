@@ -58,6 +58,12 @@ Parameters:
     MaxLength: 255
     Description: "Target group arn"
 
+  DeploymentPipelineStackName:
+    Type: String
+    MinLength: 1
+    MaxLength: 255
+    Description: "Deployment pipeline stack name"
+
 Resources:
 
   EcsServiceRole:
@@ -158,7 +164,35 @@ Resources:
       Volumes:
         - Name: my-vol
 
+  EcsContainerDiedEventRule:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: !Sub "EcsContainerDiedEventRule-${AWS::StackName}"
+      EventPattern:
+        source:
+          - "aws.ecs"
+        detail-type:
+          - "ECS Task State Change"
+        detail:
+          stoppedReason:
+            - "Essential container in task exited"
+          lastStatus:
+            - "STOPPED"
+          desiredStatus:
+            - "STOPPED"
+          taskDefinitionArn:
+            - !Ref TaskDefinition
+      State: "ENABLED"
+      Targets:
+        - Arn:
+            Fn::ImportValue: !Sub "${DeploymentPipelineStackName}-ecs-container-died-topic-arn"
+          Id: !Sub "ecs-container-died-target-${AWS::StackName}"
+    DependsOn:
+      - TaskDefinition
+
 Outputs:
+
+  # TODO: Do we need the TaskName here too?
 
   ServiceArn:
     Value: !Ref Service
