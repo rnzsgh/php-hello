@@ -16,5 +16,7 @@
           echo fread($myfile,filesize("/var/www/my-vol/date"));
           fclose($myfile);
         ?>
+
+        <br><a href="/404">Not Found</a>
     </body>
 </html>
