@@ -74,6 +74,12 @@ Parameters:
     MaxLength: 255
     Description: "Deployment pipeline stack name"
 
+  TaskKinesisStackName:
+    Type: String
+    MinLength: 1
+    MaxLength: 255
+    Description: "Task kinesis stack name"
+
 Resources:
 
   EcsServiceRole:
