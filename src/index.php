@@ -17,6 +17,6 @@
           fclose($myfile);
         ?>
 
-        <br><a href="/404">Not Found</a>
+        <br><br><a href="/404">Not Found</a>
     </body>
 </html>
