@@ -103,7 +103,6 @@ Resources:
     DependsOn:
       - ListenerRule
       - TaskDefinition
-      - EcsServiceRole
 
   ListenerRule:
     Type: "AWS::ElasticLoadBalancingV2::ListenerRule"
