@@ -5,7 +5,7 @@ A simple PHP container app with Apache.
 Directions on how to launch this sample app on Amazon ECS can be found in the documentation:
 [Docker basics](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html).
 
-Originally based on https://github.com/awslabs/ecs-demo-php-simple-app
+Originally based on the [Amazon ECS PHP Simple Demo App](https://github.com/awslabs/ecs-demo-php-simple-app)
 
 Any code, applications, scripts, templates, proofs of concept,
 documentation and other items are provided for illustration purposes only.
